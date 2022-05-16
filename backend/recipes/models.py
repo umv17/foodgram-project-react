@@ -17,7 +17,6 @@ class Tag(models.Model):
         verbose_name='Цвет'
     )
     slug = models.SlugField(
-        max_length=150,
         unique=True,
         verbose_name='Slug'
     )
@@ -33,12 +32,12 @@ class Tag(models.Model):
 
 class Ingredient(models.Model):
     name = models.CharField(
-        max_length = 150,
-        verbose_name = 'Наименование'
+        max_length=150,
+        verbose_name='Наименование'
     )
     measurement_unit = models.CharField(
-        max_length = 50,
-        verbose_name = 'Единица измерения'
+        max_length=50,
+        verbose_name='Единица измерения'
     )
 
     class Meta:
@@ -81,7 +80,7 @@ class Recipe(models.Model):
         verbose_name='Описание',
         blank=True,
         null=True,
-        )
+    )
     cooking_time = models.PositiveSmallIntegerField(
         verbose_name='Время приготовления',
         validators=[MinValueValidator(1)],
@@ -92,7 +91,6 @@ class Recipe(models.Model):
         auto_now_add=True,
         verbose_name='Дата добавления рецепта',
     )
-
 
     class Meta:
         ordering = ('-created_date',)

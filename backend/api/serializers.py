@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
 from drf_extra_fields.fields import Base64ImageField
 from recipes.models import (Favorite, Ingredient, IngredientAmount, Recipe,
@@ -6,8 +5,7 @@ from recipes.models import (Favorite, Ingredient, IngredientAmount, Recipe,
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from users.serializers import CustomUserSerializer
-
-User = get_user_model()
+from users.models import User
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -23,14 +21,13 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 
 class IngredientAmountSerializer(serializers.ModelSerializer):
-    id = serializers.ReadOnlyField(source='ingredient.id')
     name = serializers.ReadOnlyField(source='ingredient.name')
     measurement_unit = serializers.ReadOnlyField(
         source='ingredient.measurement_unit'
-        )
+    )
     amount = serializers.FloatField(
         validators=[MinValueValidator(0.01)],
-        )
+    )
 
     class Meta:
         model = IngredientAmount
@@ -71,24 +68,13 @@ class ListRecipeSerializer(serializers.ModelSerializer):
     ingredients = IngredientAmountSerializer(
         source='recipe_shop',
         many=True
-        )
+    )
     is_favorited = serializers.SerializerMethodField()
     is_in_shopping_cart = serializers.SerializerMethodField()
 
     class Meta:
         model = Recipe
-        fields = (
-            'id',
-            'tags',
-            'author',
-            'ingredients',
-            'name',
-            'image',
-            'text',
-            'cooking_time',
-            'is_favorited',
-            'is_in_shopping_cart',
-        )
+        fields = '__all__'
 
     def get_is_favorited(self, obj):
         user = self.context.get('request').user
@@ -116,8 +102,8 @@ class AddRecipeIngredientsSerializer(serializers.ModelSerializer):
     class Meta:
         model = IngredientAmount
         fields = ('id',
-        'amount'
-        )
+                  'amount'
+                  )
 
 
 class CreateRecipeSerializer(serializers.ModelSerializer):
@@ -185,6 +171,6 @@ class CreateRecipeSerializer(serializers.ModelSerializer):
             if ingredient['id'] in unique_ingredients:
                 raise ValidationError(
                     'Ингредиенты не должны повторяться'
-                    )
+                )
             unique_ingredients.add(ingredient['id'])
         return attrs
