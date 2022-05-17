@@ -22,7 +22,7 @@ class CustomUserCreateSerializer(UserCreateSerializer):
             'id',
             'first_name',
             'last_name',
-            'username',            
+            'username',
             'email',
             'password',
         )
@@ -64,7 +64,7 @@ class RecipeForFollowSerializer(serializers.ModelSerializer):
             'name',
             'image',
             'cooking_time'
-            )
+        )
 
 
 class ListFollowSerializer(serializers.ModelSerializer):

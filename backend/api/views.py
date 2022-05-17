@@ -12,12 +12,10 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-
 from api.pagination import CustomPagination
 from api.serializers import (CreateRecipeSerializer, FavoriteSerializer,
                              IngredientSerializer, ListRecipeSerializer,
                              ShopCartSerializer, TagSerializer)
-
 from .filters import CustomRecipeFilter, IngredientFilter
 from .mixins import CreateOrListViewSet
 from .permissions import IsAuthorOrAdminOrReadOnly
@@ -62,7 +60,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     )
     def shopcart(self, request, pk=None):
         recipe = get_object_or_404(Recipe, id=pk)
-        user = request.user        
+        user = request.user
         if request.method == 'POST':
             if ShopCart.objects.filter(user=user, recipe=recipe).exists():
                 return Response(
@@ -116,7 +114,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         user = request.user
         all_count_ingredients = (
             IngredientAmount.objects.filter(
-                recipe__list_recipe__user = user)
+                recipe__list_recipe__user=user)
             .values('ingredient__name', 'ingredient__measurement_unit')
             .annotate(amount=Sum('amount'))
         )
@@ -134,10 +132,10 @@ class RecipeViewSet(viewsets.ModelViewSet):
         response['Content-Disposition'] = content_disposition
         pdf = canvas.Canvas(response)
         pdfmetrics.registerFont(TTFont
-            (
-            'FreeSans',
-            'media/fonts/FreeSans.ttf')
-            )
+                                (
+                                    'FreeSans',
+                                    'media/fonts/FreeSans.ttf')
+                                )
         pdf.setFont('FreeSans', 24)
         pdf.drawCentredString(300, 770, 'Список покупок')
         pdf.setFont('FreeSans', 16)
