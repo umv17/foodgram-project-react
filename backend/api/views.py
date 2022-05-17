@@ -128,7 +128,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
                 'measurement_unit': measurement_unit}
         sub_title = f'{timezone.now().date()}'
         response = HttpResponse(content_type='application/pdf')
-        content_disposition = f'attachment; filename="shopping-list.pdf"'
+        content_disposition = 'attachment; filename="shopping-list.pdf"'
         response['Content-Disposition'] = content_disposition
         pdf = canvas.Canvas(response)
         pdfmetrics.registerFont(TTFont
