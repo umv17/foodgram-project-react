@@ -55,7 +55,7 @@ DB_PORT=5432 # порт для подключения к БД
 ```bash
 sudo docker-compose up -d
 ```
--Осушествляем миграцию
+-Первоначальная настройка
 ```bash
 sudo docker-compose exec backend python manage.py makemigrations
 sudo docker-compose exec backend python manage.py migrate --noinput 
