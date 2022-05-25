@@ -42,7 +42,6 @@ class RecipeAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'name', )
     list_filter = ('name', 'author', 'tags')
 
-    @admin.display(description='В избранном')
     def count_favorite(self, obj):
         user = self.context['request'].user
         return Favorite.objects.filter(user=user, recipe=obj).count()
