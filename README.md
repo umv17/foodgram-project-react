@@ -18,6 +18,10 @@
 
 [Пример сервера](https://umika.ddns.net/)
 
+
+login: admin
+password: Testtest12345
+
 ## Проект включает 5 сервисов:
 - backend - образ backend проекта
 - frontend - образ frontend проекта
