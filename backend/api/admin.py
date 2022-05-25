@@ -38,10 +38,16 @@ class IngredientAmount(admin.ModelAdmin):
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'author')
+    list_display = ('id', 'name', 'author', 'count_favorite')
     list_display_links = ('id', 'name', )
     list_filter = ('name', 'author', 'tags')
 
+    # @admin.display(
+    #     description='В избранных')
     def count_favorite(self, obj):
-        user = self.context['request'].user
-        return Favorite.objects.filter(user=user, recipe=obj).count()
+        return obj.recipe_favorite.count()
+
+    # def count_favorite(self, obj):
+    #     print('hi')
+    #     user = self.context['request'].user
+    #     return Favorite.objects.filter(user=user, recipe=obj).count()
