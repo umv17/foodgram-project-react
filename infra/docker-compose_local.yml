@@ -1,20 +1,6 @@
 version: '3.3'
 services:
 
-
-
-  # backend:
-  #   image: umika/backend_final:latest
-  #   restart: always
-  #   volumes:
-  #     - static_value:/backend/static_files/
-  #     - media_value:/backend/media/
-  #     - ../backend:/backend
-  #   depends_on:
-  #     - db
-  #   env_file:
-  #     - ./.env
-
   frontend:
     build:
       context: ../frontend
